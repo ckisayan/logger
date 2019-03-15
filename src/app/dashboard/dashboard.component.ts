@@ -3,6 +3,8 @@ import { loggerReducer } from '../store/logger.reducers';
 import { Store } from '@ngrx/store';
 import { Logger } from '../store/logger.model';
 import { Observable } from 'rxjs';
+import { store } from '@angular/core/src/render3/instructions';
+import * as LoggerActions from '../store/logger.actions';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,7 +13,7 @@ import { Observable } from 'rxjs';
 })
 export class DashboardComponent implements OnInit {
   private loggerColState: Observable<{loggerCol: Logger[]}>;
-  constructor(private store:
+  constructor(private storeLoc:
                         Store<{logger: {
                                         loggerCol: Logger[];
                                       };
@@ -19,9 +21,15 @@ export class DashboardComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    console.log(this.store.select('logger'));
-    this.loggerColState = this.store.select('logger');
+    console.log(this.storeLoc.select('logger'));
+    this.loggerColState = this.storeLoc.select('logger');
 
+  }
+
+  AddNewLog() {
+    const newLog = new Logger('3', 'line item 3');
+
+    this.storeLoc.dispatch(new LoggerActions.AddLogger(newLog));
   }
 
 }

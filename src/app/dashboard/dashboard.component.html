@@ -1,3 +1,8 @@
 <p *ngFor="let log of (loggerColState  | async).loggerCol">
-  dashboard works! {{log.lineId}}
+  dashboard works! {{log.lineId}} - {{log.lineText}}
 </p>
+
+
+<div class="row">
+  <button class="btn btn-primary" (click)="AddNewLog()">Add New log</button>
+</div>
