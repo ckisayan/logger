@@ -23,13 +23,39 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     console.log(this.storeLoc.select('logger'));
     this.loggerColState = this.storeLoc.select('logger');
+    this.getRandomString(1, 'bla bla bla');
 
   }
+  /**
+   @description adds new log
+ * @paramTag {anyNumber} specify line number
+ * @paramTag {anyString} specify string to print
+ * @return  returns the arguments concatinated
+ */
+  getRandomString(anyNumber: number, anyString: string) {
+    const newString = anyNumber.toString() + '---' + anyString;
+    return  newString;
+  }
 
-  AddNewLog() {
+  addNewLog() {
     const newLog = new Logger('3', 'line item 3');
 
     this.storeLoc.dispatch(new LoggerActions.AddLogger(newLog));
   }
+  addManyNewLog() {
+    const newLogCol = [
+      new Logger('3', 'line item 3'),
+      new Logger('3', 'line item 3')
+    ];
+    this.storeLoc.dispatch (new LoggerActions.AddLoggerCol(newLogCol));
+    console.log(this.storeLoc.select('logger'));
+  }
 
+  updateLog(index: number) {
+    const newLog = new Logger('10', 'line item 10');
+    this.storeLoc.dispatch (new LoggerActions.UpdateLog({index: index, log: newLog}) );
+  }
+  deleteLog(index: number) {
+    this.storeLoc.dispatch (new LoggerActions.DeleteLog(index));
+  }
 }
